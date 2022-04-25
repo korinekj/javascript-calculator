@@ -8,8 +8,18 @@ class App extends React.Component {
 
   render() {
     return (
+      <div className="App">
+        <CalculatorContainer />
+      </div>
+    );
+  }
+}
+
+class CalculatorContainer extends React.Component {
+  render() {
+    return (
       <div>
-        <h1>White REACT PAGE</h1>
+        <h1>Calculator container</h1>
       </div>
     );
   }
