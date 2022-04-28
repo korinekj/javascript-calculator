@@ -1,1 +1,45 @@
+.root-div {
+  margin: 0 auto;
+  width: 600px;
+}
 
+.author {
+  text-align: center;
+}
+
+.App {
+  border: 5px solid black;
+}
+
+.display,
+.output-screen,
+.buttons {
+  border: 1px solid red;
+}
+
+.display,
+.output-screen {
+  text-align: right;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#AC {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+#zero {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+#equals {
+  grid-row-start: 4;
+  grid-row-end: 6;
+  grid-column-start: 4;
+  grid-column-end: 5;
+}

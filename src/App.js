@@ -1,6 +1,9 @@
 import "./App.css";
 import React from "react";
 
+import Display from "./Display.js";
+import Buttons from "./Buttons.js";
+import OutputScreen from "./OutputScreen";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -8,8 +11,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <CalculatorContainer />
+      <div className="root-div">
+        <div className="App">
+          <CalculatorContainer />
+        </div>
+        <div className="author">
+          <Author />
+        </div>
       </div>
     );
   }
@@ -18,8 +26,23 @@ class App extends React.Component {
 class CalculatorContainer extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Calculator container</h1>
+      <div className="calculator">
+        <Display />
+        <OutputScreen />
+        <Buttons />
+      </div>
+    );
+  }
+}
+
+class Author extends React.Component {
+  render() {
+    const text = "Designed and Coded by";
+    return (
+      <div className="author">
+        {text}
+        <br />
+        <a href="#">Odkaz na portfolio</a>
       </div>
     );
   }
