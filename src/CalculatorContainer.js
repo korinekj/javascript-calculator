@@ -4,7 +4,7 @@ class CalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: "HAHA",
+      currentInput: 0,
     };
   }
 
@@ -12,8 +12,10 @@ class CalculatorContainer extends React.Component {
     const buttons = document
       .querySelectorAll(".buttons")[0]
       .childNodes.forEach((button) => {
-        button.addEventListener("click", () => {
-          alert(button.id);
+        button.addEventListener("click", (e) => {
+          this.setState({
+            currentInput: e.target.value,
+          });
         });
       });
   }
@@ -26,7 +28,7 @@ class CalculatorContainer extends React.Component {
       this.props.children,
       (child) => {
         return React.cloneElement(child, {
-          text: this.state.test,
+          currentInput: this.state.currentInput,
         });
       }
     );

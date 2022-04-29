@@ -1,10 +1,12 @@
 #root {
   height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .calculator {
   margin: 0 auto;
-  width: 600px;
+  width: 400px;
 }
 
 .author {
@@ -14,12 +16,18 @@
 #formula-screen,
 #display {
   text-align: right;
+  height: 50px;
+  background-color: aqua;
+  border: 1px solid black;
+  font-size: 2rem;
+  font-family: cursive;
 }
 
 /** GRID **/
 .buttons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 400px;
 }
 
 #clear {
