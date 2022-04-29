@@ -3,47 +3,22 @@ import React from "react";
 
 import Display from "./Display.js";
 import Buttons from "./Buttons.js";
-import OutputScreen from "./OutputScreen";
+import FormulaScreen from "./FormulaScreen";
+import Author from "./Author";
+import CalculatorContainer from "./CalculatorContainer";
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  state = {
+    kozy: "jak vozy",
+  };
 
   render() {
     return (
-      <div className="root-div">
-        <div className="App">
-          <CalculatorContainer />
-        </div>
-        <div className="author">
-          <Author />
-        </div>
-      </div>
-    );
-  }
-}
-
-class CalculatorContainer extends React.Component {
-  render() {
-    return (
-      <div className="calculator">
+      <CalculatorContainer>
+        <FormulaScreen />
         <Display />
-        <OutputScreen />
         <Buttons />
-      </div>
-    );
-  }
-}
-
-class Author extends React.Component {
-  render() {
-    const text = "Designed and Coded by";
-    return (
-      <div className="author">
-        {text}
-        <br />
-        <a href="#">Odkaz na portfolio</a>
-      </div>
+        <Author />
+      </CalculatorContainer>
     );
   }
 }
