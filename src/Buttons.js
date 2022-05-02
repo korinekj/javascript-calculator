@@ -4,7 +4,7 @@ class Buttons extends React.Component {
   render() {
     return (
       <div className="buttons">
-        <button id="clear" value="clear">
+        <button id="clear" value={0} onClick={this.props.clearInputOutput}>
           AC
         </button>
         <button id="divide" value=":">
@@ -13,43 +13,43 @@ class Buttons extends React.Component {
         <button id="multiply" value="*">
           x
         </button>
-        <button id="seven" value={7}>
+        <button id="seven" value="7">
           7
         </button>
-        <button id="eight" value={8}>
+        <button id="eight" value="8">
           8
         </button>
-        <button id="nine" value={9}>
+        <button id="nine" value="9">
           9
         </button>
         <button id="subtract" value="-">
           -
         </button>
-        <button id="four" value={4}>
+        <button id="four" value="4">
           4
         </button>
-        <button id="five" value={5}>
+        <button id="five" value="5">
           5
         </button>
-        <button id="six" value={6}>
+        <button id="six" value="6">
           6
         </button>
         <button id="add" value="+">
           +
         </button>
-        <button id="one" value={1}>
+        <button id="one" value="1">
           1
         </button>
-        <button id="two" value={2}>
+        <button id="two" value="2">
           2
         </button>
-        <button id="three" value={3}>
+        <button id="three" value="3">
           3
         </button>
         <button id="equals" value="=">
           =
         </button>
-        <button id="zero" value={0}>
+        <button id="zero" value="0">
           0
         </button>
         <button id="decimal" value=".">
