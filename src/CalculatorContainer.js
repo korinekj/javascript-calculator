@@ -4,15 +4,18 @@ class CalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentInput: 5,
+      currentInput: 0,
       currentFormulaScreen: "",
     };
+
+    this.array = [];
 
     this.clear = this.clear.bind(this);
     this.test = this.test.bind(this);
   }
 
   clear() {
+    this.array = [];
     this.setState({
       currentInput: 0,
     });
@@ -23,30 +26,35 @@ class CalculatorContainer extends React.Component {
     const clickedButton = event.target.value;
 
     if (operators.includes(clickedButton)) {
-      alert("kliknul si na početní operaci");
+      console.log("kliknul si na početní operaci");
       switch (clickedButton) {
         case ":":
-          alert("dělení");
+          console.log("dělení");
           break;
         case "*":
-          alert("násobení");
+          console.log("násobení");
           break;
         case "-":
-          alert("odečítání");
+          console.log("odečítání");
           break;
         case "+":
-          alert("sčítání");
+          console.log("sčítání");
           break;
         default:
           console.log("Test");
       }
     } else if (clickedButton === "=") {
-      alert("kliknul jsi na rovná se");
+      console.log("kliknul jsi na rovná se");
     } else {
       const value = parseInt(clickedButton);
 
+      // uloží nakliknuté čísla do pole, pole převede string, kde jsou všechna čísla pohromadě, poté převede na Integer
+      this.array.push(value);
+      const newArray = this.array.join("");
+      const integerArray = parseInt(newArray);
+
       this.setState({
-        currentInput: value,
+        currentInput: integerArray,
       });
     }
   }
@@ -63,6 +71,7 @@ class CalculatorContainer extends React.Component {
     /**
      * *KÓD NÍŽE NÁM vyrenderuje CalculatorContainer Children a ZAJISTÍ, ŽE VŠECHNY CHILDREN MAJÍ PŘÍSTUP K PROPS
      */
+
     const updateChildrenWithProps = React.Children.map(
       this.props.children,
       (child) => {
