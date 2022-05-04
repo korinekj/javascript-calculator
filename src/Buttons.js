@@ -4,7 +4,7 @@ class Buttons extends React.Component {
   render() {
     return (
       <div className="buttons">
-        <button id="clear" value="clear" onClick={this.props.clearInputOutput}>
+        <button id="clear" value="AC" onClick={this.props.clearInputOutput}>
           AC
         </button>
         <button id="divide" value=":">

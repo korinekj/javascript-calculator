@@ -46,13 +46,14 @@ class CalculatorContainer extends React.Component {
     } else if (clickedButton === "=") {
       console.log("kliknul jsi na rovná se");
     } else {
-      const value = parseInt(clickedButton);
+      let value = clickedButton;
 
+      // *TODO POŘESIT TEN ZKURVENEJ INPUT:d
       // uloží nakliknuté čísla do pole, pole převede string, kde jsou všechna čísla pohromadě, poté převede na Integer
       this.array.push(value);
-      const newArray = this.array.join("");
-      const integerArray = parseInt(newArray);
-
+      let newArray = this.array.join("");
+      let integerArray = parseInt(newArray);
+      console.log(integerArray);
       this.setState({
         currentInput: integerArray,
       });
