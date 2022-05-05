@@ -4,29 +4,26 @@ class CalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentInput: 0,
+      currentInput: "0",
       currentFormulaScreen: "",
     };
 
-    this.array = [];
-
     this.clear = this.clear.bind(this);
-    this.test = this.test.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   clear() {
-    this.array = [];
     this.setState({
-      currentInput: 0,
+      currentInput: "0",
+      currentFormulaScreen: "",
     });
   }
 
-  test(event) {
-    const operators = [":", "*", "-", "+"];
+  handleClick(event) {
+    const operators = [":", "*", "-", "+", "="];
     const clickedButton = event.target.value;
 
     if (operators.includes(clickedButton)) {
-      console.log("kliknul si na početní operaci");
       switch (clickedButton) {
         case ":":
           console.log("dělení");
@@ -40,31 +37,20 @@ class CalculatorContainer extends React.Component {
         case "+":
           console.log("sčítání");
           break;
-        default:
-          console.log("Test");
+        case "=":
+          console.log("rovná se");
+          break;
       }
-    } else if (clickedButton === "=") {
-      console.log("kliknul jsi na rovná se");
     } else {
-      let value = clickedButton;
-
-      // *TODO POŘESIT TEN ZKURVENEJ INPUT:d
-      // uloží nakliknuté čísla do pole, pole převede string, kde jsou všechna čísla pohromadě, poté převede na Integer
-      this.array.push(value);
-      let newArray = this.array.join("");
-      let integerArray = parseInt(newArray);
-      console.log(integerArray);
-      this.setState({
-        currentInput: integerArray,
-      });
+      console.log("something else");
     }
   }
 
   componentDidMount() {
     const buttons = document.getElementsByClassName("buttons")[0].childNodes;
 
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener("click", this.test);
+    for (let i = 1; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", this.handleClick);
     }
   }
 
