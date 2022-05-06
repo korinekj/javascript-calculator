@@ -4,6 +4,7 @@ class CalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      prevInput: "",
       currentInput: "0",
       currentFormulaScreen: "",
     };
@@ -16,6 +17,7 @@ class CalculatorContainer extends React.Component {
     this.setState({
       currentInput: "0",
       currentFormulaScreen: "",
+      prevInput: "",
     });
   }
 
@@ -43,6 +45,22 @@ class CalculatorContainer extends React.Component {
       }
     } else {
       console.log("something else");
+
+      let test = parseInt(this.state.prevInput) || 0;
+      console.log(test);
+      let test1 = parseInt(clickedButton) || ".";
+      console.log(typeof test1);
+
+      this.setState(
+        {
+          currentInput: test + test1,
+        },
+        () => {
+          this.setState((prevState) => ({
+            prevInput: prevState.currentInput,
+          }));
+        }
+      );
     }
   }
 
