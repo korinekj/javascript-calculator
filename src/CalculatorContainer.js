@@ -1,3 +1,4 @@
+import { click } from "@testing-library/user-event/dist/click";
 import React from "react";
 
 class CalculatorContainer extends React.Component {
@@ -11,6 +12,10 @@ class CalculatorContainer extends React.Component {
 
     this.clear = this.clear.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.division = this.division.bind(this);
+    this.multiply = this.multiply.bind(this);
+    this.subtraction = this.subtraction.bind(this);
+    this.addition = this.addition.bind(this);
   }
 
   clear() {
@@ -21,6 +26,22 @@ class CalculatorContainer extends React.Component {
     });
   }
 
+  division() {
+    console.log("dělení");
+  }
+
+  multiply() {
+    console.log("násobení");
+  }
+
+  subtraction() {
+    console.log("odečítání");
+  }
+
+  addition(num1, num2) {
+    console.log("sčítání");
+  }
+
   handleClick(event) {
     const operators = [":", "*", "-", "+", "="];
     const clickedButton = event.target.value;
@@ -28,16 +49,16 @@ class CalculatorContainer extends React.Component {
     if (operators.includes(clickedButton)) {
       switch (clickedButton) {
         case ":":
-          console.log("dělení");
+          this.division();
           break;
         case "*":
-          console.log("násobení");
+          this.multiply();
           break;
         case "-":
-          console.log("odečítání");
+          this.subtraction();
           break;
         case "+":
-          console.log("sčítání");
+          this.addition();
           break;
         case "=":
           console.log("rovná se");
@@ -45,22 +66,11 @@ class CalculatorContainer extends React.Component {
       }
     } else {
       console.log("something else");
-
-      let test = parseInt(this.state.prevInput) || 0;
-      console.log(test);
-      let test1 = parseInt(clickedButton) || ".";
-      console.log(typeof test1);
-
-      this.setState(
-        {
-          currentInput: test + test1,
-        },
-        () => {
-          this.setState((prevState) => ({
-            prevInput: prevState.currentInput,
-          }));
-        }
-      );
+      //let test = parseInt(this.state.prevInput) || 0;
+      //let test1 = parseInt(clickedButton) || ".";
+      this.setState((prevState) => ({
+        currentInput: prevState.prevInput + clickedButton,
+      }));
     }
   }
 
