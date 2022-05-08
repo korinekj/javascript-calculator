@@ -38,8 +38,20 @@ class CalculatorContainer extends React.Component {
     console.log("odečítání");
   }
 
-  addition(num1, num2) {
-    console.log("sčítání");
+  addition() {
+    let previousCurrentInput = this.state.currentFormulaScreen;
+
+    console.log(previousCurrentInput);
+    this.setState(
+      {
+        currentInput: "+",
+        prevInput: "",
+      },
+      () =>
+        this.setState((prevState) => ({
+          currentFormulaScreen: previousCurrentInput + prevState.currentInput,
+        }))
+    );
   }
 
   handleClick(event) {
@@ -68,9 +80,18 @@ class CalculatorContainer extends React.Component {
       console.log("something else");
       //let test = parseInt(this.state.prevInput) || 0;
       //let test1 = parseInt(clickedButton) || ".";
-      this.setState((prevState) => ({
-        currentInput: prevState.prevInput + clickedButton,
-      }));
+      this.setState(
+        (prevState) => ({
+          currentInput: parseInt(prevState.prevInput + clickedButton),
+        }),
+        () =>
+          this.setState((prevState) => {
+            return {
+              prevInput: prevState.currentInput,
+              currentFormulaScreen: prevState.currentInput,
+            };
+          })
+      );
     }
   }
 
