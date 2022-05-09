@@ -7,7 +7,7 @@ class Buttons extends React.Component {
         <button id="clear" value="AC" onClick={this.props.clearInputOutput}>
           AC
         </button>
-        <button id="divide" value=":">
+        <button id="divide" value="/">
           /
         </button>
         <button id="multiply" value="*">

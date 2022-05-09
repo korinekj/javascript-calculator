@@ -11,11 +11,14 @@ class CalculatorContainer extends React.Component {
     };
 
     this.clear = this.clear.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.calculate = this.calculate.bind(this);
+
     this.division = this.division.bind(this);
     this.multiply = this.multiply.bind(this);
     this.subtraction = this.subtraction.bind(this);
     this.addition = this.addition.bind(this);
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   clear() {
@@ -26,22 +29,56 @@ class CalculatorContainer extends React.Component {
     });
   }
 
+  calculate() {
+    const fullFormula = this.state.currentFormulaScreen;
+    const fullFormulaToArray = fullFormula.split("");
+
+    console.log(fullFormulaToArray);
+  }
+
   division() {
-    console.log("dělení");
+    this.setState(
+      {
+        currentInput: "/",
+        prevInput: "",
+      },
+      () =>
+        this.setState((prevState) => ({
+          currentFormulaScreen:
+            prevState.currentFormulaScreen + prevState.currentInput,
+        }))
+    );
   }
 
   multiply() {
-    console.log("násobení");
+    this.setState(
+      {
+        currentInput: "*",
+        prevInput: "",
+      },
+      () =>
+        this.setState((prevState) => ({
+          currentFormulaScreen:
+            prevState.currentFormulaScreen + prevState.currentInput,
+        }))
+    );
   }
 
   subtraction() {
-    console.log("odečítání");
+    this.setState(
+      {
+        currentInput: "-",
+        prevInput: "",
+      },
+      () =>
+        this.setState((prevState) => ({
+          currentFormulaScreen:
+            prevState.currentFormulaScreen + prevState.currentInput,
+        }))
+    );
   }
 
   addition() {
-    let previousCurrentInput = this.state.currentFormulaScreen;
-
-    console.log(previousCurrentInput);
     this.setState(
       {
         currentInput: "+",
@@ -49,18 +86,19 @@ class CalculatorContainer extends React.Component {
       },
       () =>
         this.setState((prevState) => ({
-          currentFormulaScreen: previousCurrentInput + prevState.currentInput,
+          currentFormulaScreen:
+            prevState.currentFormulaScreen + prevState.currentInput,
         }))
     );
   }
 
   handleClick(event) {
-    const operators = [":", "*", "-", "+", "="];
+    const operators = ["/", "*", "-", "+", "="];
     const clickedButton = event.target.value;
 
     if (operators.includes(clickedButton)) {
       switch (clickedButton) {
-        case ":":
+        case "/":
           this.division();
           break;
         case "*":
@@ -73,22 +111,19 @@ class CalculatorContainer extends React.Component {
           this.addition();
           break;
         case "=":
-          console.log("rovná se");
+          this.calculate();
           break;
       }
     } else {
-      console.log("something else");
-      //let test = parseInt(this.state.prevInput) || 0;
-      //let test1 = parseInt(clickedButton) || ".";
       this.setState(
         (prevState) => ({
-          currentInput: parseInt(prevState.prevInput + clickedButton),
+          currentInput: prevState.prevInput + clickedButton,
+          currentFormulaScreen: prevState.currentFormulaScreen + clickedButton,
         }),
         () =>
           this.setState((prevState) => {
             return {
               prevInput: prevState.currentInput,
-              currentFormulaScreen: prevState.currentInput,
             };
           })
       );
