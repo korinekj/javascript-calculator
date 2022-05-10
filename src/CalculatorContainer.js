@@ -12,6 +12,7 @@ class CalculatorContainer extends React.Component {
 
     this.clear = this.clear.bind(this);
     this.calculate = this.calculate.bind(this);
+    this.handleDecimal = this.handleDecimal.bind(this);
 
     this.division = this.division.bind(this);
     this.multiply = this.multiply.bind(this);
@@ -22,11 +23,16 @@ class CalculatorContainer extends React.Component {
   }
 
   clear() {
-    this.setState({
-      currentInput: "0",
-      currentFormulaScreen: "",
-      prevInput: "",
-    });
+    this.setState(
+      {
+        currentInput: "0",
+        currentFormulaScreen: "",
+        prevInput: "",
+      },
+      () => {
+        document.getElementById("decimal").disabled = false;
+      }
+    );
   }
 
   calculate() {
@@ -36,6 +42,10 @@ class CalculatorContainer extends React.Component {
     console.log(fullFormulaToArray);
   }
 
+  handleDecimal() {
+    alert("kliknul jsi na desetinnou čárku");
+  }
+
   division() {
     this.setState(
       {
@@ -43,10 +53,13 @@ class CalculatorContainer extends React.Component {
         prevInput: "",
       },
       () =>
-        this.setState((prevState) => ({
-          currentFormulaScreen:
-            prevState.currentFormulaScreen + prevState.currentInput,
-        }))
+        this.setState((prevState) => {
+          document.getElementById("decimal").disabled = false;
+          return {
+            currentFormulaScreen:
+              prevState.currentFormulaScreen + prevState.currentInput,
+          };
+        })
     );
   }
 
@@ -57,10 +70,13 @@ class CalculatorContainer extends React.Component {
         prevInput: "",
       },
       () =>
-        this.setState((prevState) => ({
-          currentFormulaScreen:
-            prevState.currentFormulaScreen + prevState.currentInput,
-        }))
+        this.setState((prevState) => {
+          document.getElementById("decimal").disabled = false;
+          return {
+            currentFormulaScreen:
+              prevState.currentFormulaScreen + prevState.currentInput,
+          };
+        })
     );
   }
 
@@ -71,10 +87,13 @@ class CalculatorContainer extends React.Component {
         prevInput: "",
       },
       () =>
-        this.setState((prevState) => ({
-          currentFormulaScreen:
-            prevState.currentFormulaScreen + prevState.currentInput,
-        }))
+        this.setState((prevState) => {
+          document.getElementById("decimal").disabled = false;
+          return {
+            currentFormulaScreen:
+              prevState.currentFormulaScreen + prevState.currentInput,
+          };
+        })
     );
   }
 
@@ -85,10 +104,13 @@ class CalculatorContainer extends React.Component {
         prevInput: "",
       },
       () =>
-        this.setState((prevState) => ({
-          currentFormulaScreen:
-            prevState.currentFormulaScreen + prevState.currentInput,
-        }))
+        this.setState((prevState) => {
+          document.getElementById("decimal").disabled = false;
+          return {
+            currentFormulaScreen:
+              prevState.currentFormulaScreen + prevState.currentInput,
+          };
+        })
     );
   }
 
@@ -116,10 +138,13 @@ class CalculatorContainer extends React.Component {
       }
     } else {
       this.setState(
-        (prevState) => ({
-          currentInput: prevState.prevInput + clickedButton,
-          currentFormulaScreen: prevState.currentFormulaScreen + clickedButton,
-        }),
+        (prevState) => {
+          return {
+            currentInput: prevState.prevInput + clickedButton,
+            currentFormulaScreen:
+              prevState.currentFormulaScreen + clickedButton,
+          };
+        },
         () =>
           this.setState((prevState) => {
             return {
@@ -133,8 +158,14 @@ class CalculatorContainer extends React.Component {
   componentDidMount() {
     const buttons = document.getElementsByClassName("buttons")[0].childNodes;
 
-    for (let i = 1; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener("click", this.handleClick);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentInput.includes(".")) {
+      document.getElementById("decimal").disabled = true;
     }
   }
 
@@ -150,6 +181,7 @@ class CalculatorContainer extends React.Component {
           clearInputOutput: this.clear,
           currentInput: this.state.currentInput,
           currentFormulaScreen: this.state.currentFormulaScreen,
+          handleDecimal: this.handleDecimal,
         });
       }
     );
