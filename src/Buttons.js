@@ -52,7 +52,7 @@ class Buttons extends React.Component {
         <button id="zero" value="0">
           0
         </button>
-        <button id="decimal" value="." onClick={this.props.handleDecimal}>
+        <button id="decimal" value=".">
           .
         </button>
       </div>

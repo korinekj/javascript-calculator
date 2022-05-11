@@ -12,8 +12,8 @@ class CalculatorContainer extends React.Component {
 
     this.clear = this.clear.bind(this);
     this.calculate = this.calculate.bind(this);
-    this.handleDecimal = this.handleDecimal.bind(this);
 
+    this.decimal = this.decimal.bind(this);
     this.division = this.division.bind(this);
     this.multiply = this.multiply.bind(this);
     this.subtraction = this.subtraction.bind(this);
@@ -23,27 +23,41 @@ class CalculatorContainer extends React.Component {
   }
 
   clear() {
-    this.setState(
-      {
+    document.getElementById("decimal").disabled = false;
+    this.setState(() => {
+      return {
         currentInput: "0",
         currentFormulaScreen: "",
         prevInput: "",
-      },
-      () => {
-        document.getElementById("decimal").disabled = false;
-      }
-    );
+      };
+    });
   }
 
   calculate() {
     const fullFormula = this.state.currentFormulaScreen;
     const fullFormulaToArray = fullFormula.split("");
 
+    document.getElementById("decimal").disabled = false;
+
     console.log(fullFormulaToArray);
   }
 
-  handleDecimal() {
-    alert("kliknul jsi na desetinnou čárku");
+  decimal() {
+    document.getElementById("decimal").disabled = true;
+    this.setState(
+      (prevState) => {
+        return {
+          currentInput: prevState.currentInput + ".",
+          currentFormulaScreen: prevState.currentFormulaScreen + ".",
+        };
+      },
+      () =>
+        this.setState((prevState) => {
+          return {
+            prevInput: prevState.currentInput,
+          };
+        })
+    );
   }
 
   division() {
@@ -115,7 +129,7 @@ class CalculatorContainer extends React.Component {
   }
 
   handleClick(event) {
-    const operators = ["/", "*", "-", "+", "="];
+    const operators = ["/", "*", "-", "+", "=", "."];
     const clickedButton = event.target.value;
 
     if (operators.includes(clickedButton)) {
@@ -135,6 +149,8 @@ class CalculatorContainer extends React.Component {
         case "=":
           this.calculate();
           break;
+        case ".":
+          this.decimal();
       }
     } else {
       this.setState(
@@ -163,11 +179,11 @@ class CalculatorContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentInput.includes(".")) {
-      document.getElementById("decimal").disabled = true;
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.currentInput.includes(".")) {
+  //     document.getElementById("decimal").disabled = true;
+  //   }
+  // }
 
   render() {
     /**
@@ -181,7 +197,6 @@ class CalculatorContainer extends React.Component {
           clearInputOutput: this.clear,
           currentInput: this.state.currentInput,
           currentFormulaScreen: this.state.currentFormulaScreen,
-          handleDecimal: this.handleDecimal,
         });
       }
     );
