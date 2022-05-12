@@ -35,29 +35,53 @@ class CalculatorContainer extends React.Component {
 
   calculate() {
     const fullFormula = this.state.currentFormulaScreen;
-    const fullFormulaToArray = fullFormula.split("");
+    console.log(fullFormula);
 
-    document.getElementById("decimal").disabled = false;
+    const regex = /[-+/*]/;
+    const fullFormulaToArray = fullFormula.split(regex);
 
     console.log(fullFormulaToArray);
   }
 
   decimal() {
     document.getElementById("decimal").disabled = true;
-    this.setState(
-      (prevState) => {
-        return {
-          currentInput: prevState.currentInput + ".",
-          currentFormulaScreen: prevState.currentFormulaScreen + ".",
-        };
-      },
-      () =>
-        this.setState((prevState) => {
+    document.getElementById("zero").disabled = false;
+
+    //pokud currentInput není 0 NEBO currentFormula není 0
+    if (
+      this.state.currentInput !== 0 ||
+      this.state.currentFormulaScreen !== 0
+    ) {
+      this.setState(
+        (prevState) => {
           return {
-            prevInput: prevState.currentInput,
+            currentInput: prevState.currentInput + ".",
+            currentFormulaScreen: prevState.currentFormulaScreen + ".",
           };
-        })
-    );
+        },
+        () =>
+          this.setState((prevState) => {
+            return {
+              prevInput: prevState.currentInput,
+            };
+          })
+      );
+    } else {
+      this.setState(
+        (prevState) => {
+          return {
+            currentInput: prevState.currentInput + ".",
+            currentFormulaScreen: "0.",
+          };
+        },
+        () =>
+          this.setState((prevState) => {
+            return {
+              prevInput: prevState.currentInput,
+            };
+          })
+      );
+    }
   }
 
   division() {
@@ -153,6 +177,7 @@ class CalculatorContainer extends React.Component {
           this.decimal();
       }
     } else {
+      document.getElementById("zero").disabled = false;
       this.setState(
         (prevState) => {
           return {
@@ -163,6 +188,9 @@ class CalculatorContainer extends React.Component {
         },
         () =>
           this.setState((prevState) => {
+            if (prevState.currentInput === "0") {
+              document.getElementById("zero").disabled = true;
+            }
             return {
               prevInput: prevState.currentInput,
             };
