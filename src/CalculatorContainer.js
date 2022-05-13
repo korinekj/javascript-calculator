@@ -43,9 +43,14 @@ class CalculatorContainer extends React.Component {
     const fullFormulaToArray = fullFormula.split(regex);
 
     console.log(fullFormulaToArray);
+
+    this.setState({
+      currentInput: eval(fullFormula),
+    });
   }
 
   decimal() {
+    const prevOperators = ["*", "+", "-", "/"];
     document.getElementById("decimal").disabled = true;
     document.getElementById("zero").disabled = false;
     console.log(this.state.currentInput);
@@ -54,6 +59,14 @@ class CalculatorContainer extends React.Component {
       this.state.currentInput !== "0" ||
       this.state.currentFormulaScreen !== ""
     ) {
+      if (prevOperators.includes(this.state.currentInput)) {
+        this.setState((prevState) => {
+          return {
+            currentInput: "0",
+            currentFormulaScreen: prevState.currentFormulaScreen + "0",
+          };
+        });
+      }
       this.setState(
         (prevState) => {
           return {
@@ -88,10 +101,16 @@ class CalculatorContainer extends React.Component {
 
   division() {
     const prevOperators = ["*", "+", "-"];
+
     if (this.state.currentInput !== "/") {
       if (prevOperators.includes(this.state.currentInput)) {
-        this.setState({
-          currentFormulaScreen: "",
+        this.setState((prevState) => {
+          return {
+            currentFormulaScreen: prevState.currentFormulaScreen.replace(
+              /[-+*/]*[/\-+*]$/,
+              ""
+            ),
+          };
         });
       }
       this.setState(
@@ -113,10 +132,16 @@ class CalculatorContainer extends React.Component {
 
   multiply() {
     const prevOperators = ["/", "+", "-"];
+
     if (this.state.currentInput !== "*") {
       if (prevOperators.includes(this.state.currentInput)) {
-        this.setState({
-          currentFormulaScreen: "",
+        this.setState((prevState) => {
+          return {
+            currentFormulaScreen: prevState.currentFormulaScreen.replace(
+              /[-+*/]*[/\-+*]$/,
+              ""
+            ),
+          };
         });
       }
       this.setState(
@@ -137,13 +162,7 @@ class CalculatorContainer extends React.Component {
   }
 
   subtraction() {
-    const prevOperators = ["/", "+", "*"];
     if (this.state.currentInput !== "-") {
-      if (prevOperators.includes(this.state.currentInput)) {
-        this.setState({
-          currentFormulaScreen: "",
-        });
-      }
       this.setState(
         {
           currentInput: "-",
@@ -163,10 +182,16 @@ class CalculatorContainer extends React.Component {
 
   addition() {
     const prevOperators = ["/", "*", "-"];
+
     if (this.state.currentInput !== "+") {
       if (prevOperators.includes(this.state.currentInput)) {
-        this.setState({
-          currentFormulaScreen: "",
+        this.setState((prevState) => {
+          return {
+            currentFormulaScreen: prevState.currentFormulaScreen.replace(
+              /[-+*/]*[/\-+*]$/,
+              ""
+            ),
+          };
         });
       }
       this.setState(
@@ -211,13 +236,14 @@ class CalculatorContainer extends React.Component {
           this.decimal();
       }
     } else {
+      //! OCTAL LITERALS - ČÍSLO ABY NEZAČÍNALO NULOU - NYNÍ FUNGUJE ALE POUZE POKUD NEPOUZIJU DESETINNOU CARKU
       document.getElementById("zero").disabled = false;
       this.setState(
         (prevState) => {
           return {
             currentInput: prevState.prevInput + clickedButton,
             currentFormulaScreen:
-              prevState.currentFormulaScreen + clickedButton,
+              prevState.currentFormulaScreen.replace(/^0/, "") + clickedButton,
           };
         },
         () =>
@@ -226,7 +252,7 @@ class CalculatorContainer extends React.Component {
               document.getElementById("zero").disabled = true;
             }
             return {
-              prevInput: prevState.currentInput,
+              prevInput: prevState.currentInput.replace(/^0/, ""),
             };
           })
       );
