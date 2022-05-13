@@ -6,6 +6,7 @@ class CalculatorContainer extends React.Component {
     super(props);
     this.state = {
       prevInput: "",
+      prevOperator: "",
       currentInput: "0",
       currentFormulaScreen: "",
     };
@@ -29,6 +30,7 @@ class CalculatorContainer extends React.Component {
         currentInput: "0",
         currentFormulaScreen: "",
         prevInput: "",
+        prevOperator: "",
       };
     });
   }
@@ -46,11 +48,11 @@ class CalculatorContainer extends React.Component {
   decimal() {
     document.getElementById("decimal").disabled = true;
     document.getElementById("zero").disabled = false;
-
-    //pokud currentInput není 0 NEBO currentFormula není 0
+    console.log(this.state.currentInput);
+    //pokud currentInput není 0 NEBO currentFormula není ""
     if (
-      this.state.currentInput !== 0 ||
-      this.state.currentFormulaScreen !== 0
+      this.state.currentInput !== "0" ||
+      this.state.currentFormulaScreen !== ""
     ) {
       this.setState(
         (prevState) => {
@@ -85,71 +87,103 @@ class CalculatorContainer extends React.Component {
   }
 
   division() {
-    this.setState(
-      {
-        currentInput: "/",
-        prevInput: "",
-      },
-      () =>
-        this.setState((prevState) => {
-          document.getElementById("decimal").disabled = false;
-          return {
-            currentFormulaScreen:
-              prevState.currentFormulaScreen + prevState.currentInput,
-          };
-        })
-    );
+    const prevOperators = ["*", "+", "-"];
+    if (this.state.currentInput !== "/") {
+      if (prevOperators.includes(this.state.currentInput)) {
+        this.setState({
+          currentFormulaScreen: "",
+        });
+      }
+      this.setState(
+        {
+          currentInput: "/",
+          prevInput: "",
+        },
+        () =>
+          this.setState((prevState) => {
+            document.getElementById("decimal").disabled = false;
+            return {
+              currentFormulaScreen:
+                prevState.currentFormulaScreen + prevState.currentInput,
+            };
+          })
+      );
+    }
   }
 
   multiply() {
-    this.setState(
-      {
-        currentInput: "*",
-        prevInput: "",
-      },
-      () =>
-        this.setState((prevState) => {
-          document.getElementById("decimal").disabled = false;
-          return {
-            currentFormulaScreen:
-              prevState.currentFormulaScreen + prevState.currentInput,
-          };
-        })
-    );
+    const prevOperators = ["/", "+", "-"];
+    if (this.state.currentInput !== "*") {
+      if (prevOperators.includes(this.state.currentInput)) {
+        this.setState({
+          currentFormulaScreen: "",
+        });
+      }
+      this.setState(
+        {
+          currentInput: "*",
+          prevInput: "",
+        },
+        () =>
+          this.setState((prevState) => {
+            document.getElementById("decimal").disabled = false;
+            return {
+              currentFormulaScreen:
+                prevState.currentFormulaScreen + prevState.currentInput,
+            };
+          })
+      );
+    }
   }
 
   subtraction() {
-    this.setState(
-      {
-        currentInput: "-",
-        prevInput: "",
-      },
-      () =>
-        this.setState((prevState) => {
-          document.getElementById("decimal").disabled = false;
-          return {
-            currentFormulaScreen:
-              prevState.currentFormulaScreen + prevState.currentInput,
-          };
-        })
-    );
+    const prevOperators = ["/", "+", "*"];
+    if (this.state.currentInput !== "-") {
+      if (prevOperators.includes(this.state.currentInput)) {
+        this.setState({
+          currentFormulaScreen: "",
+        });
+      }
+      this.setState(
+        {
+          currentInput: "-",
+          prevInput: "",
+        },
+        () =>
+          this.setState((prevState) => {
+            document.getElementById("decimal").disabled = false;
+            return {
+              currentFormulaScreen:
+                prevState.currentFormulaScreen + prevState.currentInput,
+            };
+          })
+      );
+    }
   }
 
   addition() {
-    this.setState(
-      {
-        currentInput: "+",
-        prevInput: "",
-      },
-      () =>
-        this.setState((prevState) => {
-          document.getElementById("decimal").disabled = false;
-          return {
-            currentFormulaScreen:
-              prevState.currentFormulaScreen + prevState.currentInput,
-          };
-        })
-    );
+    const prevOperators = ["/", "*", "-"];
+    if (this.state.currentInput !== "+") {
+      if (prevOperators.includes(this.state.currentInput)) {
+        this.setState({
+          currentFormulaScreen: "",
+        });
+      }
+      this.setState(
+        {
+          currentInput: "+",
+          prevInput: "",
+        },
+        () =>
+          this.setState((prevState) => {
+            document.getElementById("decimal").disabled = false;
+            return {
+              currentFormulaScreen:
+                prevState.currentFormulaScreen + prevState.currentInput,
+            };
+          })
+      );
+    }
   }
 
   handleClick(event) {
