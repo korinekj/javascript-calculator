@@ -238,12 +238,13 @@ class CalculatorContainer extends React.Component {
     } else {
       //! OCTAL LITERALS - ČÍSLO ABY NEZAČÍNALO NULOU - NYNÍ FUNGUJE ALE POUZE POKUD NEPOUZIJU DESETINNOU CARKU
       document.getElementById("zero").disabled = false;
+
       this.setState(
         (prevState) => {
           return {
             currentInput: prevState.prevInput + clickedButton,
             currentFormulaScreen:
-              prevState.currentFormulaScreen.replace(/^0/, "") + clickedButton,
+              prevState.currentFormulaScreen + clickedButton,
           };
         },
         () =>
@@ -252,7 +253,7 @@ class CalculatorContainer extends React.Component {
               document.getElementById("zero").disabled = true;
             }
             return {
-              prevInput: prevState.currentInput.replace(/^0/, ""),
+              prevInput: prevState.currentInput,
             };
           })
       );
