@@ -101,6 +101,7 @@ class CalculatorContainer extends React.Component {
 
   division() {
     const prevOperators = ["*", "+", "-"];
+    console.log(this.state.currentInput);
 
     if (this.state.currentInput !== "/") {
       if (prevOperators.includes(this.state.currentInput)) {
@@ -128,6 +129,9 @@ class CalculatorContainer extends React.Component {
           })
       );
     }
+    this.setState({
+      prevInput: "",
+    });
   }
 
   multiply() {
@@ -238,6 +242,7 @@ class CalculatorContainer extends React.Component {
     } else {
       //! OCTAL LITERALS - ČÍSLO ABY NEZAČÍNALO NULOU - NYNÍ FUNGUJE ALE POUZE POKUD NEPOUZIJU DESETINNOU CARKU
       document.getElementById("zero").disabled = false;
+      console.log(this.state.currentFormulaScreen);
 
       this.setState(
         (prevState) => {
@@ -252,8 +257,23 @@ class CalculatorContainer extends React.Component {
             if (prevState.currentInput === "0") {
               document.getElementById("zero").disabled = true;
             }
+            //*TADY VYMYSLET...KDYZ BUDE FORMULA KONCIT NULOU A ZAROVEN CHCI PRIDAT DESETINNE CISLO TAK NEFUGNUJE
             return {
-              prevInput: prevState.currentInput,
+              prevInput:
+                prevState.currentInput === "0" ? "" : prevState.currentInput,
+              currentFormulaScreen: (function () {
+                console.log(prevState.currentFormulaScreen);
+                if (
+                  prevState.currentInput === "0" &&
+                  prevState.currentFormulaScreen.charAt(
+                    prevState.currentFormulaScreen.length - 1
+                  ) === "0"
+                ) {
+                  return prevState.currentFormulaScreen.slice(0, -1);
+                } else if (prevState.currentFormulaScreen !== 0) {
+                  return prevState.currentFormulaScreen;
+                }
+              })(),
             };
           })
       );
