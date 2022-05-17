@@ -37,12 +37,6 @@ class CalculatorContainer extends React.Component {
 
   calculate() {
     const fullFormula = this.state.currentFormulaScreen;
-    console.log(fullFormula);
-
-    const regex = /[-+/*]/;
-    const fullFormulaToArray = fullFormula.split(regex);
-
-    console.log(fullFormulaToArray);
 
     this.setState({
       currentInput: eval(fullFormula),
@@ -51,14 +45,17 @@ class CalculatorContainer extends React.Component {
 
   decimal() {
     const prevOperators = ["*", "+", "-", "/"];
+    const regex = /[\-+*/]/;
     document.getElementById("decimal").disabled = true;
     document.getElementById("zero").disabled = false;
     console.log(this.state.currentInput);
+
     //pokud currentInput není 0 NEBO currentFormula není ""
     if (
       this.state.currentInput !== "0" ||
       this.state.currentFormulaScreen !== ""
     ) {
+      console.log(prevOperators.includes(this.state.currentInput));
       if (prevOperators.includes(this.state.currentInput)) {
         this.setState((prevState) => {
           return {
@@ -67,8 +64,22 @@ class CalculatorContainer extends React.Component {
           };
         });
       }
+      if (
+        this.state.currentInput === "0" &&
+        this.state.currentFormulaScreen
+          .charAt(this.state.currentFormulaScreen.length - 1)
+          .match(regex)
+      ) {
+        this.setState((prevState) => {
+          console.log("i am here bitch");
+          return {
+            currentFormulaScreen: prevState.currentFormulaScreen + "0",
+          };
+        });
+      }
       this.setState(
         (prevState) => {
+          console.log("i am here");
           return {
             currentInput: prevState.currentInput + ".",
             currentFormulaScreen: prevState.currentFormulaScreen + ".",
@@ -84,6 +95,7 @@ class CalculatorContainer extends React.Component {
     } else {
       this.setState(
         (prevState) => {
+          console.log("and im here");
           return {
             currentInput: prevState.currentInput + ".",
             currentFormulaScreen: "0.",
@@ -240,9 +252,7 @@ class CalculatorContainer extends React.Component {
           this.decimal();
       }
     } else {
-      //! OCTAL LITERALS - ČÍSLO ABY NEZAČÍNALO NULOU - NYNÍ FUNGUJE ALE POUZE POKUD NEPOUZIJU DESETINNOU CARKU
       document.getElementById("zero").disabled = false;
-      console.log(this.state.currentFormulaScreen);
 
       this.setState(
         (prevState) => {
@@ -254,6 +264,7 @@ class CalculatorContainer extends React.Component {
         },
         () =>
           this.setState((prevState) => {
+            console.log(prevState.currentInput);
             if (prevState.currentInput === "0") {
               document.getElementById("zero").disabled = true;
             }
@@ -262,7 +273,6 @@ class CalculatorContainer extends React.Component {
               prevInput:
                 prevState.currentInput === "0" ? "" : prevState.currentInput,
               currentFormulaScreen: (function () {
-                console.log(prevState.currentFormulaScreen);
                 if (
                   prevState.currentInput === "0" &&
                   prevState.currentFormulaScreen.charAt(
