@@ -9,6 +9,7 @@ class CalculatorContainer extends React.Component {
       prevOperator: "",
       currentInput: "0",
       currentFormulaScreen: "",
+      evaluated: false,
     };
 
     this.clear = this.clear.bind(this);
@@ -31,6 +32,7 @@ class CalculatorContainer extends React.Component {
         currentFormulaScreen: "",
         prevInput: "",
         prevOperator: "",
+        evaluated: false,
       };
     });
   }
@@ -38,9 +40,15 @@ class CalculatorContainer extends React.Component {
   calculate() {
     const fullFormula = this.state.currentFormulaScreen;
 
-    this.setState({
-      currentInput: eval(fullFormula),
-    });
+    this.setState(
+      {
+        currentInput: eval(fullFormula),
+        evaluated: true,
+      },
+      () => {
+        return {};
+      }
+    );
   }
 
   decimal() {
@@ -127,13 +135,21 @@ class CalculatorContainer extends React.Component {
         });
       }
       this.setState(
-        {
-          currentInput: "/",
-          prevInput: "",
+        (prevState) => {
+          console.log(this.state.currentFormulaScreen);
+          return {
+            currentInput: "/",
+            prevInput: "",
+            currentFormulaScreen:
+              prevState.evaluated === true
+                ? prevState.currentInput
+                : prevState.currentFormulaScreen,
+          };
         },
         () =>
           this.setState((prevState) => {
             document.getElementById("decimal").disabled = false;
+
             return {
               currentFormulaScreen:
                 prevState.currentFormulaScreen + prevState.currentInput,
@@ -161,9 +177,16 @@ class CalculatorContainer extends React.Component {
         });
       }
       this.setState(
-        {
-          currentInput: "*",
-          prevInput: "",
+        (prevState) => {
+          console.log(this.state.currentFormulaScreen);
+          return {
+            currentInput: "*",
+            prevInput: "",
+            currentFormulaScreen:
+              prevState.evaluated === true
+                ? prevState.currentInput
+                : prevState.currentFormulaScreen,
+          };
         },
         () =>
           this.setState((prevState) => {
@@ -180,9 +203,16 @@ class CalculatorContainer extends React.Component {
   subtraction() {
     if (this.state.currentInput !== "-") {
       this.setState(
-        {
-          currentInput: "-",
-          prevInput: "",
+        (prevState) => {
+          console.log(this.state.currentFormulaScreen);
+          return {
+            currentInput: "-",
+            prevInput: "",
+            currentFormulaScreen:
+              prevState.evaluated === true
+                ? prevState.currentInput
+                : prevState.currentFormulaScreen,
+          };
         },
         () =>
           this.setState((prevState) => {
@@ -211,9 +241,16 @@ class CalculatorContainer extends React.Component {
         });
       }
       this.setState(
-        {
-          currentInput: "+",
-          prevInput: "",
+        (prevState) => {
+          console.log(this.state.currentFormulaScreen);
+          return {
+            currentInput: "+",
+            prevInput: "",
+            currentFormulaScreen:
+              prevState.evaluated === true
+                ? prevState.currentInput
+                : prevState.currentFormulaScreen,
+          };
         },
         () =>
           this.setState((prevState) => {
@@ -268,7 +305,7 @@ class CalculatorContainer extends React.Component {
             if (prevState.currentInput === "0") {
               document.getElementById("zero").disabled = true;
             }
-            //*TADY VYMYSLET...KDYZ BUDE FORMULA KONCIT NULOU A ZAROVEN CHCI PRIDAT DESETINNE CISLO TAK NEFUGNUJE
+
             return {
               prevInput:
                 prevState.currentInput === "0" ? "" : prevState.currentInput,
@@ -297,12 +334,6 @@ class CalculatorContainer extends React.Component {
       buttons[i].addEventListener("click", this.handleClick);
     }
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.currentInput.includes(".")) {
-  //     document.getElementById("decimal").disabled = true;
-  //   }
-  // }
 
   render() {
     /**
