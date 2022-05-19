@@ -39,16 +39,17 @@ class CalculatorContainer extends React.Component {
 
   calculate() {
     const fullFormula = this.state.currentFormulaScreen;
+    console.log(fullFormula);
 
-    this.setState(
-      {
-        currentInput: eval(fullFormula),
-        evaluated: true,
-      },
-      () => {
-        return {};
-      }
-    );
+    const numberArrayRegex = /[*/\-\+]/;
+    const operatorArrayRegex = /[0-9]/;
+
+    //*Převod string na Array - split
+    const numberArray = fullFormula.split(numberArrayRegex);
+    console.log(numberArray);
+
+    const operatorArray = fullFormula.split(operatorArrayRegex);
+    console.log(operatorArray);
   }
 
   decimal() {
@@ -56,14 +57,12 @@ class CalculatorContainer extends React.Component {
     const regex = /[\-+*/]/;
     document.getElementById("decimal").disabled = true;
     document.getElementById("zero").disabled = false;
-    console.log(this.state.currentInput);
 
     //pokud currentInput není 0 NEBO currentFormula není ""
     if (
       this.state.currentInput !== "0" ||
       this.state.currentFormulaScreen !== ""
     ) {
-      console.log(prevOperators.includes(this.state.currentInput));
       if (prevOperators.includes(this.state.currentInput)) {
         this.setState((prevState) => {
           return {
@@ -79,7 +78,6 @@ class CalculatorContainer extends React.Component {
           .match(regex)
       ) {
         this.setState((prevState) => {
-          console.log("i am here bitch");
           return {
             currentFormulaScreen: prevState.currentFormulaScreen + "0",
           };
@@ -87,7 +85,6 @@ class CalculatorContainer extends React.Component {
       }
       this.setState(
         (prevState) => {
-          console.log("i am here");
           return {
             currentInput: prevState.currentInput + ".",
             currentFormulaScreen: prevState.currentFormulaScreen + ".",
@@ -103,7 +100,6 @@ class CalculatorContainer extends React.Component {
     } else {
       this.setState(
         (prevState) => {
-          console.log("and im here");
           return {
             currentInput: prevState.currentInput + ".",
             currentFormulaScreen: "0.",
@@ -121,7 +117,6 @@ class CalculatorContainer extends React.Component {
 
   division() {
     const prevOperators = ["*", "+", "-"];
-    console.log(this.state.currentInput);
 
     if (this.state.currentInput !== "/") {
       if (prevOperators.includes(this.state.currentInput)) {
@@ -136,7 +131,6 @@ class CalculatorContainer extends React.Component {
       }
       this.setState(
         (prevState) => {
-          console.log(this.state.currentFormulaScreen);
           return {
             currentInput: "/",
             prevInput: "",
@@ -178,7 +172,6 @@ class CalculatorContainer extends React.Component {
       }
       this.setState(
         (prevState) => {
-          console.log(this.state.currentFormulaScreen);
           return {
             currentInput: "*",
             prevInput: "",
@@ -204,7 +197,6 @@ class CalculatorContainer extends React.Component {
     if (this.state.currentInput !== "-") {
       this.setState(
         (prevState) => {
-          console.log(this.state.currentFormulaScreen);
           return {
             currentInput: "-",
             prevInput: "",
@@ -242,7 +234,6 @@ class CalculatorContainer extends React.Component {
       }
       this.setState(
         (prevState) => {
-          console.log(this.state.currentFormulaScreen);
           return {
             currentInput: "+",
             prevInput: "",
@@ -301,7 +292,6 @@ class CalculatorContainer extends React.Component {
         },
         () =>
           this.setState((prevState) => {
-            console.log(prevState.currentInput);
             if (prevState.currentInput === "0") {
               document.getElementById("zero").disabled = true;
             }
