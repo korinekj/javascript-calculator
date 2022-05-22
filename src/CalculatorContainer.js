@@ -41,14 +41,40 @@ class CalculatorContainer extends React.Component {
     const fullFormula = this.state.currentFormulaScreen;
     console.log(fullFormula);
 
+    /**
+     * SILENT MATT LIBRARY - taky funkční bez použíti eval() - využítí knihovny (kód, který někdo jiný již naprogramoval)
+     */
+    // const Parser = require("expr-eval").Parser;
+    // const parser = new Parser();
+    // let vysledek = parser.evaluate(fullFormula);
+
+    // this.setState({
+    //   currentInput: vysledek,
+    //   evaluated: true,
+    // });
+
+    /**
+     * FUNCTION CONTRUCTOR - taky funkční bez použíti eval()
+     */
+    // function evil(fn) {
+    //   return new Function("return " + fn)();
+    // }
+    // this.setState({
+    //   currentInput: evil(fullFormula),
+    //   evaluated: true,
+    // });
+
     const numberArrayRegex = /[*/\-\+]/;
     const operatorArrayRegex = /[0-9]/;
 
-    //*Převod string na Array - split
+    //Udělá z formula stringu pole, ve kterém budou všechny čísla
     const numberArray = fullFormula.split(numberArrayRegex);
     console.log(numberArray);
 
-    const operatorArray = fullFormula.split(operatorArrayRegex);
+    //Udělá z formula stringu pole, ve kterém budou všechny znaménka a odfiltruje prázdný stringy
+    const operatorArray = fullFormula
+      .split(operatorArrayRegex)
+      .filter((operator) => operator !== "");
     console.log(operatorArray);
   }
 
