@@ -37,9 +37,8 @@ class CalculatorContainer extends React.Component {
     });
   }
 
-  calculate() {
-    const fullFormula = this.state.currentFormulaScreen;
-    console.log(fullFormula);
+  calculate(infix) {
+    const fullFormula = infix;
 
     /**
      * SILENT MATT LIBRARY - taky funkční bez použíti eval() - využítí knihovny (kód, který někdo jiný již naprogramoval)
@@ -64,18 +63,20 @@ class CalculatorContainer extends React.Component {
     //   evaluated: true,
     // });
 
-    const numberArrayRegex = /[*/\-\+]/;
-    const operatorArrayRegex = /[0-9]/;
+    //
 
-    //Udělá z formula stringu pole, ve kterém budou všechny čísla
-    const numberArray = fullFormula.split(numberArrayRegex);
-    console.log(numberArray);
+    // const numberArrayRegex = /[*/\-\+]/;
+    // const operatorArrayRegex = /[0-9]/;
 
-    //Udělá z formula stringu pole, ve kterém budou všechny znaménka a odfiltruje prázdný stringy
-    const operatorArray = fullFormula
-      .split(operatorArrayRegex)
-      .filter((operator) => operator !== "");
-    console.log(operatorArray);
+    // //Udělá z formula stringu pole, ve kterém budou všechny čísla
+    // const numberArray = fullFormula.split(numberArrayRegex);
+    // console.log(numberArray);
+
+    // //Udělá z formula stringu pole, ve kterém budou všechny znaménka a odfiltruje prázdný stringy
+    // const operatorArray = fullFormula
+    //   .split(operatorArrayRegex)
+    //   .filter((operator) => operator !== "");
+    // console.log(operatorArray);
   }
 
   decimal() {
@@ -300,7 +301,7 @@ class CalculatorContainer extends React.Component {
           this.addition();
           break;
         case "=":
-          this.calculate();
+          this.calculate(this.state.currentFormulaScreen);
           break;
         case ".":
           this.decimal();
