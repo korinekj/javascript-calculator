@@ -2,6 +2,12 @@
   height: 100vh;
   display: flex;
   align-items: center;
+  background-color: #c2c2d6;
+}
+
+@font-face {
+  font-family: "digital-7";
+  src: url("https://www.1001fonts.com/download/font/digital-7.regular.ttf");
 }
 
 .calculator {
@@ -17,10 +23,14 @@
 #display {
   text-align: right;
   height: 50px;
-  background-color: aqua;
+  background-color: #000000;
+  color: #ffffff;
   border: 1px solid black;
-  font-size: 2rem;
-  font-family: cursive;
+  font-size: 1.6rem;
+  font-family: Orbitron;
+}
+#formula-screen {
+  color: #ffa500;
 }
 
 /** GRID **/
@@ -30,9 +40,27 @@
   height: 400px;
 }
 
+.buttons button {
+  color: white;
+  background-color: #4d4d4d;
+  font-size: 1.1rem;
+}
+
+.buttons #divide,
+#multiply,
+#subtract,
+#add {
+  background-color: #fb9717;
+}
+
+.buttons #equals {
+  background-color: #004466;
+}
+
 #clear {
   grid-column-start: 1;
   grid-column-end: 3;
+  background-color: #ac3939;
 }
 
 #zero {
