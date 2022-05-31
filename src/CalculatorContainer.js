@@ -40,6 +40,11 @@ class CalculatorContainer extends React.Component {
   calculate(infix) {
     const fullFormula = infix;
 
+    this.setState({
+      evaluated: true,
+      currentInput: eval(fullFormula),
+    });
+
     /**
      * SILENT MATT LIBRARY - taky funkční bez použíti eval() - využítí knihovny (kód, který někdo jiný již naprogramoval)
      */
