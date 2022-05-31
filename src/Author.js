@@ -7,7 +7,7 @@ class Author extends React.Component {
       <div className="author">
         {text}
         <br />
-        <a href="#">jK</a>
+        <a href="https://korinekj.github.io/">jK</a>
       </div>
     );
   }
